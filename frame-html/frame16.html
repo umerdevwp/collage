@@ -1,0 +1,408 @@
+<!DOCTYPE>
+<html>
+<head>
+    <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="js/html2canvas.js"></script>
+    <script type="text/javascript" src="js/photoCollageMaker.js"></script>
+</head>
+<style type="text/css">
+    #frame1-a {
+        width: 49.5%;
+        height: 100%;
+        background-color: #FFC0CB;
+        float: left;
+    }
+
+    #frame1-b {
+        width: 49.5%;
+        height: 49.5%;
+        background-color: #DDA0DD;
+        float: right;
+    }
+
+    #frame1-border1 {
+        width: 49.5%;
+        height: 1%;
+        background-color: white;
+        float: right;
+    }
+
+    #frame1-c {
+        width: 49.5%;
+        height: 49.5%;
+        background-color: #B0E0E6;
+        float: right;
+    }
+
+    .collage-designer .editor {
+        background-image: url(/wp-content/plugins/xxlpix-app-config/includes/assets/images/checkerboard.png);
+        background-repeat: repeat;
+        display: table;
+        float: left;
+        height: 578px;
+        width: 650px;
+    }
+
+    .c-layout-wrap {
+        display: table-cell;
+        position: relative;
+        vertical-align: middle;
+    }
+
+    .c-format-11-P, .c-format-11-L {
+        height: 520px;
+        width: 520px;
+    }
+
+    .c-layout {
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        /*box-shadow: 0 0 5px 0 #666;*/
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .c-mask-overlay {
+        position: absolute;
+        z-index: 3;
+        width: 520px;
+        height: 520px;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+
+    .c-layout-11-L-30-v2 .slot-1, .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-3, .c-layout-11-L-30-v2 .slot-4, .c-layout-11-L-30-v2 .slot-5, .c-layout-11-L-30-v2 .slot-6 {
+        top: 58px;
+    }
+
+    .c-layout-11-L-30-v2 .c-slot {
+        width: 76px;
+        height: 76px;
+    }
+
+    .c-slot {
+        height: 100px;
+        width: 150px;
+    }
+
+    .c-slot {
+        background-color: grey !important;
+        background-color: rgba(225, 225, 225, 0.6);
+        background-color: #ddd;
+        position: absolute;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+
+    *, :after, :before {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    body {
+        color: #7b7b7b;
+        font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 1.5em;
+        overflow-x: hidden;
+    }
+
+    .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-8, .c-layout-11-L-30-v2 .slot-14, .c-layout-11-L-30-v2 .slot-20, .c-layout-11-L-30-v2 .slot-26 {
+        left: 99px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-1, .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-3, .c-layout-11-L-30-v2 .slot-4, .c-layout-11-L-30-v2 .slot-5, .c-layout-11-L-30-v2 .slot-6 {
+        top: 58px;
+    }
+
+    .c-layout-11-L-30-v2 .c-slot {
+        width: 76px;
+        height: 76px;
+    }
+
+    .c-slot {
+        background-color: rgba(225, 225, 225, 0.6);
+        /* background-color: #ddd; */
+        position: absolute;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    .c-slot input {
+        cursor: pointer;
+        height: 100%;
+        left: 0;
+        margin: 0;
+        opacity: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .c-layout-11-L-30-v2 .slot-3, .c-layout-11-L-30-v2 .slot-9, .c-layout-11-L-30-v2 .slot-15, .c-layout-11-L-30-v2 .slot-21, .c-layout-11-L-30-v2 .slot-27 {
+        left: 181px
+    }
+
+    .c-layout-11-L-30-v2 .slot-1, .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-3, .c-layout-11-L-30-v2 .slot-4, .c-layout-11-L-30-v2 .slot-5, .c-layout-11-L-30-v2 .slot-6 {
+
+    }
+
+    .c-layout-11-L-30-v2 .slot-4, .c-layout-11-L-30-v2 .slot-10, .c-layout-11-L-30-v2 .slot-16, .c-layout-11-L-30-v2 .slot-22, .c-layout-11-L-30-v2 .slot-28 {
+        left: 263px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-5, .c-layout-11-L-30-v2 .slot-11, .c-layout-11-L-30-v2 .slot-17, .c-layout-11-L-30-v2 .slot-23, .c-layout-11-L-30-v2 .slot-29 {
+        left: 345px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-1, .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-3, .c-layout-11-L-30-v2 .slot-4, .c-layout-11-L-30-v2 .slot-5, .c-layout-11-L-30-v2 .slot-6 {
+        top: 58px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-6, .c-layout-11-L-30-v2 .slot-12, .c-layout-11-L-30-v2 .slot-18, .c-layout-11-L-30-v2 .slot-24, .c-layout-11-L-30-v2 .slot-30 {
+        left: 427px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-1, .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-3, .c-layout-11-L-30-v2 .slot-4, .c-layout-11-L-30-v2 .slot-5, .c-layout-11-L-30-v2 .slot-6 {
+        top: 58px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-1, .c-layout-11-L-30-v2 .slot-7, .c-layout-11-L-30-v2 .slot-13, .c-layout-11-L-30-v2 .slot-19, .c-layout-11-L-30-v2 .slot-25 {
+        left: 17px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-6, .c-layout-11-L-30-v2 .slot-12, .c-layout-11-L-30-v2 .slot-18, .c-layout-11-L-30-v2 .slot-24, .c-layout-11-L-30-v2 .slot-30 {
+        left: 427px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-1, .c-layout-11-L-30-v2 .slot-7, .c-layout-11-L-30-v2 .slot-13, .c-layout-11-L-30-v2 .slot-19, .c-layout-11-L-30-v2 .slot-25 {
+        left: 17px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-7, .c-layout-11-L-30-v2 .slot-8, .c-layout-11-L-30-v2 .slot-9, .c-layout-11-L-30-v2 .slot-10, .c-layout-11-L-30-v2 .slot-11, .c-layout-11-L-30-v2 .slot-12 {
+        top: 140px;
+    }
+
+    .c-layout-11-L-30-v2 .c-slot {
+        width: 76px;
+        height: 76px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-8, .c-layout-11-L-30-v2 .slot-14, .c-layout-11-L-30-v2 .slot-20, .c-layout-11-L-30-v2 .slot-26 {
+        left: 99px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-3, .c-layout-11-L-30-v2 .slot-9, .c-layout-11-L-30-v2 .slot-15, .c-layout-11-L-30-v2 .slot-21, .c-layout-11-L-30-v2 .slot-27 {
+        left: 181px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-7, .c-layout-11-L-30-v2 .slot-8, .c-layout-11-L-30-v2 .slot-9, .c-layout-11-L-30-v2 .slot-10, .c-layout-11-L-30-v2 .slot-11, .c-layout-11-L-30-v2 .slot-12 {
+        top: 140px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-13, .c-layout-11-L-30-v2 .slot-14, .c-layout-11-L-30-v2 .slot-15, .c-layout-11-L-30-v2 .slot-16, .c-layout-11-L-30-v2 .slot-17, .c-layout-11-L-30-v2 .slot-18 {
+        top: 222px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-19, .c-layout-11-L-30-v2 .slot-20, .c-layout-11-L-30-v2 .slot-21, .c-layout-11-L-30-v2 .slot-22, .c-layout-11-L-30-v2 .slot-23, .c-layout-11-L-30-v2 .slot-24 {
+        top: 304px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-8, .c-layout-11-L-30-v2 .slot-14, .c-layout-11-L-30-v2 .slot-20, .c-layout-11-L-30-v2 .slot-26 {
+        left: 99px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-3, .c-layout-11-L-30-v2 .slot-9, .c-layout-11-L-30-v2 .slot-15, .c-layout-11-L-30-v2 .slot-21, .c-layout-11-L-30-v2 .slot-27 {
+        left: 181px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-1, .c-layout-11-L-30-v2 .slot-7, .c-layout-11-L-30-v2 .slot-13, .c-layout-11-L-30-v2 .slot-19, .c-layout-11-L-30-v2 .slot-25 {
+        left: 17px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-2, .c-layout-11-L-30-v2 .slot-8, .c-layout-11-L-30-v2 .slot-14, .c-layout-11-L-30-v2 .slot-20, .c-layout-11-L-30-v2 .slot-26 {
+        left: 99px;
+    }
+
+    .c-layout-11-L-30-v2 .slot-25, .c-layout-11-L-30-v2 .slot-26, .c-layout-11-L-30-v2 .slot-27, .c-layout-11-L-30-v2 .slot-28, .c-layout-11-L-30-v2 .slot-29, .c-layout-11-L-30-v2 .slot-30 {
+        top: 386px;
+    }
+</style>
+<body>
+<div class="pcm-img c-layout c-format-11-L c-layout-11-L-30-v2">
+    <div class="c-mask-overlay" data-file="thumb_mask_heart_1.png" style="background-image: url('https://photo-collage.net/wp-content/plugins/xxlpix-app-config/includes/assets/images/collage/collage_mask_overlays/thumbs/thumb_mask_heart_1.png');">
+    <p class="pcm-dimension" id="pcm-width"></p>
+    <div class="pcm-dimension rule_w"></div>
+    <div class="pcm-dimension rule_h"></div>
+    <p class="pcm-dimension" id="pcm-height"></p>
+    <div class="pcm-x c-slot slot-1 js-droppable ui-droppable" data-quality="1">
+        <input class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-2 js-droppable ui-droppable" data-quality="1">
+        <input class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-3 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-4 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-5 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-6 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-7 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-8 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-9 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-10 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-11 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-12 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-13 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-14 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-15 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-16 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-17 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-18 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-19 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9">
+        <img>
+    </div>
+    <div class="pcm-x c-slot slot-20 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-21 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-22 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-23 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-24 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-25 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-26 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-27 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-28 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-29 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    <div class="pcm-x c-slot slot-30 js-droppable ui-droppable" data-quality="1"><input
+            class="pcm-collage js-upload-new initialized" name="files[]" type="file" title=" " data-upload-type="9"><img>
+    </div>
+    </div>
+    </div>
+    <div class="pcm-x" id="frame1-dsa"><input class="pcm-collage" type="file" accept="image/jpeg, image/png"><img></div>
+</div>
+<input class="pcm-btn-Preview-Image" type="button" value="Preview"/>
+<div class="pcm-previewImage"></div>
+<script type="text/javascript">
+    $(function () {
+        $(".pcm-img").resizable({
+            containment: "body",
+            resize: function (e, ui) {
+                $(".pcm-dimension").css("display", "block");
+                $(this).find("#pcm-width").text(Math.round(ui.size.width) + "px");
+                $(this).find("#pcm-height").text(Math.round(ui.size.height) + "px");
+
+                $(this).find('.pcm-x').each(function () {
+                    var frameHeight = $(this).css('height').replace("px", "");
+                    var frameWidth = $(this).css('width').replace("px", "");
+                    var frameRela = frameHeight / frameWidth;
+                    var imageHeight = $(this).find('img').css('height').replace("px", "");
+                    var imageWidth = $(this).find('img').css('width').replace("px", "");
+                    var imageRela = imageHeight / imageWidth;
+
+                    if (imageRela < frameRela) {
+                        $(this).find('img').css('height', '100%');
+                        $(this).find('img').css('width', 'unset');
+                    } else {
+                        $(this).find('img').css('width', '100%');
+                        $(this).find('img').css('height', 'unset');
+                    }
+                })
+            }
+        });
+        $(".pcm-x img").draggable({
+            stop: function (event, ui) {
+                if (($(this).position().top >= $(this).parent().height()) || ($(this).position().top <= -$(this).height()) || ($(this).position().left >= $(this).parent().width()) || ($(this).position().left <= -$(this).width())) {
+                    $(this).css('top', 0);
+                    $(this).css('left', 0);
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
